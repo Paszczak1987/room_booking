@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Lista sal
+{% endblock %}
+
+{% block content %}
+    <h3>Lista sal</h3>
+    {% if not rooms  %}
+        <h3>Brak dostępnych sal.</h3>
+    {% else %}
+        <table>
+            <tr>
+                <th>id</th>
+                <th>Sala</th>
+                <th>Ilość miejsc</th>
+                <th>Projektor</th>
+                <th>Dostęność</th>
+            </tr>
+            {% for room in rooms %}
+                <tr>
+                    <td>{{ room.pk }}</td>
+                    <td><a href="{% url 'home:room_detail' pk=room.pk %}">{{ room.name }}</a></td>
+                    <td>{{ room.capacity }}</td>
+                    <td>{{ room.projector|yesno:"Jest,Nie ma" }}</td>
+                    <td>{{ room.has_reservation_today|yesno:"Niedostępna,Wolna" }}</td>
+                    <td><a href="{% url 'home:reservation' pk=room.pk %}">Zarezerwuj</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+
+
+
+{% endblock %}

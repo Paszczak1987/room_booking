@@ -15,3 +15,19 @@ class Room(Modified):
     capacity = models.IntegerField()
     projector = models.BooleanField()
     
+    def __str__(self):
+        return self.name
+
+
+class Reservation(Modified):
+    date = models.DateField()
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    comment = models.CharField(max_length=100)
+    
+    def __str__(self):
+        return f"{self.room.name} {self.date}"
+    
+    class Meta:
+        unique_together = ('date', 'room',)
+        
+        

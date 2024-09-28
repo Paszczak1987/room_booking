@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ room.name }}
+{% endblock %}
+
+{% block content %}
+    <h3>Szczegóły Sali: {{ room.name }}</h3>
+    <p><strong>Pojemność:</strong> {{ room.capacity }} osób.</p>
+    <p><strong>Rzutnik:</strong> {{ room.projector|yesno:"Dostępny,Niedostępny" }}</p>
+
+    <h3>Rezerwacja na dziś:</h3>
+    <ul>
+        {% if reservations_today %}
+            {% for reservation in reservations_today %}
+                <li>{{ reservation.date }}</li>
+                <li>{{ reservation.comment }}</li>
+            {% endfor %}
+        {% else %}
+            <li>Brak.</li>
+        {% endif %}
+    </ul>
+
+    <h3>Przyszłe rezerwacje:</h3>
+    <ul>
+        {% if reservations_from_today %}
+            {% for reservation in reservations_from_today%}
+                <li>{{ reservation.date|date:"d-m-y" }}: {{ reservation.comment }}</li>
+            {% endfor %}
+        {% else %}
+            <li>Brak.</li>
+        {% endif %}
+    </ul>
+
+    <a href="{% url 'home:reservation' pk=room.pk %}">Zarezerwuj</a>
+    <a href="{% url 'home:room_list' %}">Powrót do listy sal</a>
+{% endblock %}

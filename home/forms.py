@@ -1,4 +1,5 @@
 from django import forms
+from django.utils import timezone
 from . import models
 
 class RoomCreateForm(forms.ModelForm):
@@ -40,3 +41,25 @@ class RoomCreateForm(forms.ModelForm):
         return name
     
     
+class ReservationCreateForm(forms.ModelForm):
+    class Meta:
+        model = models.Reservation
+        fields = ['date', 'comment']
+        widgets = {
+            'date': forms.DateInput(attrs={'type': 'date'}),
+        }
+        
+    def __init__(self, *args, **kwargs):
+        room = kwargs.pop('room', None)
+        self.room = room.pk
+        super(ReservationCreateForm, self).__init__(*args, **kwargs)
+        self.fields['date'].label = "Data rezerwacji"
+        self.fields['comment'].label = "Notatka"
+        
+    def clean_date(self):
+        date = self.cleaned_data.get('date')
+        if date < timezone.now().date():
+            raise forms.ValidationError("Nie można zarezerwować sali wstecznie.")
+        if models.Reservation.objects.filter(room=self.room, date=date).exists():
+            raise forms.ValidationError("Ta sala jest już zarezerwowana na wybrany dzień.")
+        return date
