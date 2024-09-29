@@ -1,0 +1,25 @@
+<h3>Szczegóły sali {{ room.name }}:</h3>
+<p><strong>Pojemność:</strong> {{ room.capacity }} osób.</p>
+<p><strong>Rzutnik:</strong> {{ room.projector|yesno:"Dostępny,Niedostępny" }}</p>
+
+<h4>Rezerwacja na dziś:</h4>
+<ul>
+    {% if reservations_today %}
+        {% for reservation in reservations_today %}
+            <li>{{ reservation.date|date:"d-m-y" }}: {{ reservation.comment }}</li>
+        {% endfor %}
+    {% else %}
+        <li>Brak.</li>
+    {% endif %}
+</ul>
+
+<h4>Przyszłe rezerwacje:</h4>
+<ul>
+    {% if reservations_from_today %}
+        {% for reservation in reservations_from_today %}
+            <li>{{ reservation.date|date:"d-m-y" }}: {{ reservation.comment }}</li>
+        {% endfor %}
+    {% else %}
+        <li>Brak.</li>
+    {% endif %}
+</ul>

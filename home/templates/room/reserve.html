@@ -1,0 +1,28 @@
+{% extends 'room/room_base.html' %}
+
+{% block room %}
+
+    <h3>Formularz rezerwacji sali:</h3>
+    <form method="post">
+        {% csrf_token %}
+
+        <div>
+            <label for="{{ form.date.id_for_label }}">{{ form.date.label }}</label>
+            {{ form.date }}
+            {% if form.date.errors %}
+                <div class="error">{{ form.date.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div>
+            <label for="{{ form.comment.id_for_label }}">{{ form.comment.label }}</label>
+            {{ form.comment }}
+            {% if form.comment.errors %}
+                <div class="error">{{ form.comment.errors }}</div>
+            {% endif %}
+        </div>
+
+        <button type="submit">Zarezerwuj</button>
+    </form>
+
+{% endblock %}

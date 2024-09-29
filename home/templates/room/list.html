@@ -6,7 +6,7 @@
 
 {% block content %}
     <h3>Lista sal</h3>
-    {% if not rooms  %}
+    {% if not rooms %}
         <h3>Brak dostępnych sal.</h3>
     {% else %}
         <table>
@@ -24,12 +24,12 @@
                     <td>{{ room.capacity }}</td>
                     <td>{{ room.projector|yesno:"Jest,Nie ma" }}</td>
                     <td>{{ room.has_reservation_today|yesno:"Niedostępna,Wolna" }}</td>
-                    <td><a href="{% url 'home:reservation' pk=room.pk %}">Zarezerwuj</a></td>
+                    <td><a href="{% url 'home:reservation' pk=room.pk %}">Rezerwacja</a></td>
+                    <td><a href="{% url 'home:update_room' pk=room.pk %}">Edycja</a></td>
+                    <td><a href="{% url 'home:remove_room' pk=room.pk %}">Usuń</a></td>
                 </tr>
             {% endfor %}
         </table>
     {% endif %}
-
-
 
 {% endblock %}

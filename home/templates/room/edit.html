@@ -1,0 +1,32 @@
+{% extends 'room/room_base.html' %}
+
+{% block room %}
+
+    <h3>Formularz edycji sali:</h3>
+    <form method="post" novalidate>
+        {% csrf_token %}
+
+        {{ form.non_field_errors }}
+
+        <div>
+            <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+            {{ form.name }}  <!-- Wyświetl pole formularza -->
+            {{ form.name.errors }}  <!-- Wyświetl błędy związane z polem name -->
+        </div>
+
+        <div>
+            <label for="{{ form.capacity.id_for_label }}">{{ form.capacity.label }}</label>
+            {{ form.capacity }}  <!-- Wyświetl pole formularza -->
+            {{ form.capacity.errors }}  <!-- Wyświetl błędy związane z polem capacity -->
+        </div>
+
+        <div>
+            <label for="{{ form.projector.id_for_label }}">{{ form.projector.label }}</label>
+            {{ form.projector }}  <!-- Checkbox, wyświetl pole formularza -->
+            {{ form.projector.errors }}  <!-- Wyświetl błędy związane z polem projector -->
+        </div>
+
+        <button type="submit">Zapisz zmiany</button>  <!-- Przycisk zapisz -->
+    </form>
+
+{% endblock %}

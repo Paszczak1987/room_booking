@@ -1,0 +1,12 @@
+{% extends 'room/room_base.html' %}
+
+{% block room %}
+
+    <h3>Usuwanie:</h3>
+    <form method="post">
+        {% csrf_token %}
+        <p>Czy na pewno chcesz usunąć salę {{ room.name }}?</p>
+        <button type="submit">Potwierdź</button>  <!-- Przycisk do usunięcia -->
+    </form>
+
+{% endblock %}

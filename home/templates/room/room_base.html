@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if view == 'room_details' %}
+        {{ room.name }}
+    {% elif view == 'reservation_details' %}
+        Rezerwacja: {{ room.name }}
+    {% elif view == 'edit' %}
+        Edycja: {{ room.name }}
+    {% elif view == 'remove' %}
+        Usuwanie: {{ room.name }}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+
+    {% include 'room/_room_details.html' %}
+
+    {% block room %}
+        {#    Forms    #}
+    {% endblock %}
+
+
+    <h3>Menu akcji:</h3>
+    <ul>
+        {% if view != 'reservation_details' %}
+            <li><a href="{% url 'home:reservation' pk=room.pk %}">Zarezerwuj</a></li>
+        {% endif %}
+
+        {% if view != 'edit' %}
+            <li><a href="{% url 'home:update_room' pk=room.pk %}">Edytuj</a></li>
+        {% endif %}
+
+        {% if view != 'remove' %}
+            <li><a href="{% url 'home:remove_room' pk=room.pk %}">Usuń</a></li>
+        {% endif %}
+
+        <li><a href="{% url 'home:room_list' %}">Powrót do listy sal</a></li>
+    </ul>
+
+{% endblock %}
